@@ -26,5 +26,5 @@ Nesse desafio para Frontend, você deve construir uma aplicação web para lista
 - [Jest](https://jestjs.io/)
 - [React Testing Library](https://testing-library.com/)
 
-  ## Prazo para finalizar
-  Você tem 5 dias para finalizar e entregar o desafio.
+## 📅 Prazo para finalizar
+Você tem 5 dias para finalizar e entregar o desafio.
