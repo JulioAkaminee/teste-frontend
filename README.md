@@ -3,7 +3,7 @@ Nesse desafio para Frontend, você deve construir uma aplicação web para lista
 
 
 ## 🎨 Design 
-[Acesse aqui](https://www.figma.com/design/d7tffwO8l1hXxjH8fxdaZH/Desafio-Frontend---Find-People?node-id=0-1&p=f&t=8y4o21BIsLtoqOLg-0) o design no Figma do desafio.
+[Acesse aqui](https://www.figma.com/design/d7tffwO8l1hXxjH8fxdaZH/Desafio-Frontend---Find-People?node-id=0-1&p=f&t=8y4o21BIsLtoqOLg-0) o design do Figma desse desafio.
 
 ## ✅ Requisitos
 - [ ] Deve listar usuários, buscando da API [randomuser.me](randomuser.me )
