@@ -15,16 +15,6 @@ Nesse desafio para Frontend, você deve construir uma aplicação web para lista
 - [ ] Deve ser possível pesquisar usuários pela **idade**
 - [ ] Deve conter **teste de todos os componentes**
 
-## ⚙️ Stack obrigatória
-- [React com Vite](https://vite.dev/guide/)
-- [TypeScript](https://www.typescriptlang.org/)
-- [Sass](https://sass-lang.com/)
-- [React Router](https://reactrouter.com/)
-- [Storybook](https://storybook.js.org/)
-- [Motion](https://motion.dev/)
-- [React Query](https://tanstack.com/query/latest)
-- [Jest](https://jestjs.io/)
-- [React Testing Library](https://testing-library.com/)
 
 ## 📅 Prazo para finalizar
 Você tem 5 dias para finalizar e entregar o desafio.
