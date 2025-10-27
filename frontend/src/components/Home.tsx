@@ -72,6 +72,7 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
+   const [selectedUser, setSelectedUser] = useState<User | null>(null);
 
   useEffect(() => {
     fetch('https://randomuser.me/api/?results=500')
@@ -136,13 +137,34 @@ function Home() {
           <td className="border border-gray-600 p-2 text-center">{user.name.title}</td>
           <td className="border border-gray-600 p-2 text-center">{new Date(user.dob.date).toLocaleDateString()}</td>
           <td className="border border-gray-600 p-2 text-center">{user.dob.age}</td>
-          <td className="border border-gray-600 p-2 text-center cursor-pointer text-tableTop">View Profile</td>
+          <td className="border border-gray-600 p-2 text-center cursor-pointer text-tableTop"  onClick={() => setSelectedUser(user)}>View Profile</td>
         </tr>
       ))}
     </tbody>
   </table>
 )}
+{selectedUser && (
+  <div className="fixed inset-0 bg-black bg-opacity-70 flex justify-center items-center z-50">
+    <div className="bg-gray-800 text-white rounded p-6 w-3/4 max-w-lg relative">
+      <button
+        className="absolute top-2 right-2 text-white text-2xl font-bold"
+        onClick={() => setSelectedUser(null)}
+      >
+        &times;
+      </button>
+      <h2 className="text-xl font-bold mb-4">Detalhes do Usuário</h2>
+      <p><strong>Nome:</strong> {selectedUser.name.title} {selectedUser.name.first} {selectedUser.name.last}</p>
+      <p><strong>Email:</strong> {selectedUser.email}</p>
+      <p><strong>Telefone:</strong> {selectedUser.phone}</p>
+      <p><strong>Celular:</strong> {selectedUser.cell}</p>
+      <p><strong>Localização:</strong> {selectedUser.location.city}, {selectedUser.location.state}, {selectedUser.location.country}</p>
+     
+    </div>
+  </div>
+)}
+
       </div>
+      
     </div>
   );
 }
