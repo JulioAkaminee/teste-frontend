@@ -71,9 +71,10 @@ function Home() {
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=30')
+    fetch('https://randomuser.me/api/?results=500')
       .then((response) => {
         if (!response.ok) throw new Error("Erro na requisição");
         return response.json();
@@ -91,6 +92,10 @@ function Home() {
   if (loading) return (<p>Buscando dados</p>);
   if (error) return (<p>Erro: {error}</p>);
 
+   // Filtra os usuários pelo termo de busca no nome completo (first + last)
+  const filteredUsers = users.filter(user => 
+    (`${user.name.first} ${user.name.last}`).toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <div className="flex justify-center items-center flex-col bg-background">
       <h1 className="font-bold text-white m-10 text-4xl flex justify-center">Find People</h1>
@@ -100,37 +105,43 @@ function Home() {
         name="searchUsers"
         id="SearchUsers"
         placeholder="Search people..."
-        className="bg-transparent w-4/12 rounded-xl p-3 mt-4 border-2 outline-none text-white"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        className="bg-transparent w-8/12 rounded-xl p-3 mt-4 border-2 outline-none text-white"
       />
       <hr className="border-white w-full my-6" />
 
-      <div>
-        <table className="text-white border-collapse border border-gray-700">
-          <thead>
-            <tr className="bg-tableTop">
-              <th className="border border-gray-600 p-2">ID</th>
-              <th className="border border-gray-600 p-2">First Name</th>
-              <th className="border border-gray-600 p-2">Last Name</th>
-              <th className="border border-gray-600 p-2">Title</th>
-              <th className="border border-gray-600 p-2">Date of Birth</th>
-              <th className="border border-gray-600 p-2">Age</th>
-              <th className="border border-gray-600 p-2">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((user) => (
-              <tr key={user.login.uuid}>
-                <td className="border border-gray-600 p-2">{user.login.uuid}</td>
-                <td className="border border-gray-600 p-2">{user.name.first}</td>
-                <td className="border border-gray-600 p-2">{user.name.last}</td>
-                <td className="border border-gray-600 p-2">{user.name.title}</td>
-                <td className="border border-gray-600 p-2">{new Date(user.dob.date).toLocaleDateString()}</td>
-                <td className="border border-gray-600 p-2">{user.dob.age}</td>
-                <td className="border border-gray-600 p-2">View Profile</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="w-full p-4">
+     {filteredUsers.length === 0 ? (
+  <p className="text-white p-4 text-center">Nenhum usuário encontrado.</p>
+) : (
+  <table className="text-white border-collapse border border-gray-700 w-full">
+    <thead>
+      <tr className="bg-tableTop">
+        <th className="border border-gray-600 p-2 w-48">ID</th>
+        <th className="border border-gray-600 p-2 w-48">First Name</th>
+        <th className="border border-gray-600 p-2 w-48">Last Name</th>
+        <th className="border border-gray-600 p-2 w-48">Title</th>
+        <th className="border border-gray-600 p-2 w-48">Date of Birth</th>
+        <th className="border border-gray-600 p-2 w-48">Age</th>
+        <th className="border border-gray-600 p-2 w-48">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      {filteredUsers.map((user) => (
+        <tr key={user.login.uuid}>
+          <td className="border border-gray-600 p-2 text-center">{user.login.uuid}</td>
+          <td className="border border-gray-600 p-2 text-center">{user.name.first}</td>
+          <td className="border border-gray-600 p-2 text-center">{user.name.last}</td>
+          <td className="border border-gray-600 p-2 text-center">{user.name.title}</td>
+          <td className="border border-gray-600 p-2 text-center">{new Date(user.dob.date).toLocaleDateString()}</td>
+          <td className="border border-gray-600 p-2 text-center">{user.dob.age}</td>
+          <td className="border border-gray-600 p-2 text-center cursor-pointer text-tableTop">View Profile</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+)}
       </div>
     </div>
   );
