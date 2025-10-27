@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 
+import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+
 type ApiResponse = {
   results: User[];
   info: {
@@ -68,14 +71,17 @@ type User = {
 };
 
 function Home() {
+  const navigate = useNavigate();
   const [users, setUsers] = useState<User[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-   const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+   const [page, setPage] = useState(1);
+   const pages = Array.from({ length: 10 }, (_, i) => i + 1);
 
   useEffect(() => {
-    fetch('https://randomuser.me/api/?results=500')
+    fetch(`https://randomuser.me/api/?page=${page}&results=10&seed=abc`)
       .then((response) => {
         if (!response.ok) throw new Error("Erro na requisição");
         return response.json();
@@ -88,15 +94,22 @@ function Home() {
         setError(err.message);
         setLoading(false);
       });
-  }, []);
+  }, [page]);
 
   if (loading) return (<p>Buscando dados</p>);
   if (error) return (<p>Erro: {error}</p>);
 
    // Filtra os usuários pelo termo de busca no nome completo (first + last)
-  const filteredUsers = users.filter(user => 
-    (`${user.name.first} ${user.name.last}`).toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = users.filter(user => {
+  const fullName = `${user.name.first} ${user.name.last}`.toLowerCase();
+  const search = searchTerm.toLowerCase();
+
+
+  return (
+    fullName.includes(search) ||
+    user.dob.age.toString().includes(search)
   );
+});
   return (
     <div className="flex justify-center items-center flex-col bg-background">
       <h1 className="font-bold text-white m-10 text-4xl flex justify-center">Find People</h1>
@@ -137,7 +150,12 @@ function Home() {
           <td className="border border-gray-600 p-2 text-center">{user.name.title}</td>
           <td className="border border-gray-600 p-2 text-center">{new Date(user.dob.date).toLocaleDateString()}</td>
           <td className="border border-gray-600 p-2 text-center">{user.dob.age}</td>
-          <td className="border border-gray-600 p-2 text-center cursor-pointer text-tableTop"  onClick={() => setSelectedUser(user)}>View Profile</td>
+          <td
+              className="cursor-pointer"
+              onClick={() => navigate(`/user/${user.login.uuid}`, { state: { user } })}
+            >
+              View Profile
+            </td>
         </tr>
       ))}
     </tbody>
@@ -162,6 +180,17 @@ function Home() {
     </div>
   </div>
 )}
+    <div className="flex justify-center space-x-2 mt-6">
+        {pages.map((p) => (
+          <button
+            key={p}
+            className={`px-4 py-2 rounded-full border border-tableTop ${p === page ? 'bg-tableTop text-white' : ' text-white'}`}
+            onClick={() => setPage(p)}
+          >
+            {p}
+          </button>
+        ))}
+      </div>
 
       </div>
       
