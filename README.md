@@ -15,4 +15,9 @@ Nesse desafio para Frontend, você deve construir uma aplicação web para lista
 - [ ] Deve ser possível pesquisar usuários pela **idade**
 - [ ] Deve conter **teste de todos os componentes**
 
+## 💻 Stack Utilizada
+  React (CRA),
+  React Router,
+  TypeScript,
+  Tailwind
 
