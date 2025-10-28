@@ -65,9 +65,8 @@ function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [page, setPage] = useState(1);
-  const totalPages = 3;
+  const totalPages = 5;
   const pages = Array.from({ length: totalPages }, (_, i) => i + 1);
 
   useEffect(() => {
