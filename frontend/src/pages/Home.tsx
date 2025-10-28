@@ -116,7 +116,10 @@ function Home() {
 
       <div className="w-full p-4 overflow-x-auto">
         {filteredUsers.length === 0 ? (
-          <p className="text-white p-4 text-center">Nenhum usuário encontrado.</p>
+          <div>
+            <p className="text-white text-center">Nenhum resultado encontrado</p>
+                   <p className="text-white text-center">Tente novamente utilizando outro termo</p>
+          </div>
         ) : (
           <table className="min-w-max text-white border-collapse border border-gray-700 w-full">
             <thead>
