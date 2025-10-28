@@ -16,5 +16,3 @@ Nesse desafio para Frontend, você deve construir uma aplicação web para lista
 - [ ] Deve conter **teste de todos os componentes**
 
 
-## 📅 Prazo para finalizar
-Você tem 5 dias para finalizar e entregar o desafio.
